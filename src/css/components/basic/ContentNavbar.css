@@ -1,0 +1,52 @@
+.content-navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #fff; /* Set the background to white */
+    padding: 5px 0; /* Reduced vertical padding to decrease navbar height */
+    height: 50px;
+  }
+  
+  .content-nav-item {
+    display: block;
+    color: #817E7E; /* A lighter gray for the text color of not selected items */
+    /* text-transform: uppercase; Uppercase text for the tabs */
+    font-weight: normal; /* Normal font weight for not selected items */
+    padding: 5px 10px; /* Reduced padding around the tabs to decrease height */
+    cursor: pointer; /* Change cursor to pointer to indicate interactivity */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+    position: relative; /* Position relative for pseudo-elements */
+    font-size: 1.2rem; /* Slightly smaller font size */
+    line-height: 1.2; /* Adjusted line height for better alignment */
+    height: 45px;
+  }
+  
+  .content-nav-item.active {
+    color: #2E4C15; /* Dark green color for the text of the selected item */
+    font-weight: bold; /* Bold font weight for selected item */
+  }
+  
+  .content-nav-item::after {
+    content: '';
+    display: block;
+    width: 100%; /* Full width underline for all items */
+    height: 2px;
+    background: transparent; /* Transparent underline for not selected items */
+    position: absolute;
+    bottom: -2px; /* Position at the bottom of the nav-item */
+    left: 0;
+  }
+  
+  .content-nav-item.active::after {
+    background: #D76715; /* Orange color for the underline of the selected item */
+  }
+  
+  /* Add hover effect for not selected items */
+  .content-nav-item:not(.active):hover {
+    color: #2E4C15; /* Dark green color on hover for not selected items */
+  }
+  
+  .content-nav-item:not(.active):hover::after {
+    background: #817E7E; /* Lighter gray for the underline of not selected items */
+  }
+  

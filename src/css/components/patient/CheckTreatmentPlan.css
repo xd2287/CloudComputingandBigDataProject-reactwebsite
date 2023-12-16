@@ -1,0 +1,73 @@
+/* CheckTreatmentPlan.css */
+
+.TreatmentPlans-Container {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Spacing between each treatment plan */
+    overflow: auto;
+    height: 90%;
+}
+
+.TreatmentPlan-Container {
+    background-color: #f0f0f0; /* Light gray background for each treatment plan */
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.TreatmentPlan-Container h3 {
+    margin-top: 0;
+    color: #333; /* Dark text color for the header */
+}
+
+.Medicines-Container {
+    display: flex;
+    justify-content: space-between; /* Align items between start and end of the container */
+    align-items: center; /* Vertically align items in the center */
+}
+
+.Medicines {
+    padding: 10px 30px;
+}
+
+.Medicines ol {
+    /* list-style-type: none; Remove default list styling */
+    padding: 0;
+}
+
+.Medicines ol li {
+    margin-bottom: 5px;
+}
+
+.Medicines ol li p {
+    margin: 0; /* Remove default margins */
+    color: #325317; /* Dark text color for the content */
+    font-weight: lighter;
+    font-size: 14px;
+}
+
+.Medicines strong{
+    margin: 5px;
+    color: black;
+    font-size: 16px;
+}
+
+
+.Reminder {
+    display: block;
+    justify-content: flex-end; /* Align the reminder icon to the right */
+}
+
+.Reminder img {
+    width: 50px;
+    height: 50px;
+}
+
+.alarm-icon:hover {
+    cursor: pointer; /* Changes the cursor to a pointer hand when hovering over the image */
+}
+
+.reminder-hint {
+    font-size: 12px;
+}
