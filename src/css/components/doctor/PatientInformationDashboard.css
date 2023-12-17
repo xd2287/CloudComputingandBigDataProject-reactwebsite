@@ -1,0 +1,205 @@
+.dashboard {
+    /* box-sizing: border-box; */
+    /* height: calc(82vh-20px); */
+    height: 90%;
+    max-width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    display: flex;
+    overflow: auto;
+}
+
+.infoMenu{
+    flex:3.5;
+    background-color: rgb(238, 236, 236);
+}
+
+.infoMenuInput {
+    width: 90%;
+    padding: 10px 5px;
+    border: none;
+    border-bottom: 1px solid gray;
+  }  
+
+.infoBox{
+    flex:7.5;
+    background-color: rgb(245, 244, 244);
+}
+
+.patientSelector{
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 8px;
+    /* border-bottom: solid 1px; */
+    background-color: rgb(247, 247, 247) ;
+}
+
+.patientSelector:hover{
+    background-color: rgb(199, 201, 196);
+}
+
+.patientName{
+    font-weight: 500;
+}
+
+.infoBoxWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .infoBoxHead h2 {
+    /* align-items: center;
+    background-color: rgb(116, 185, 33);
+    color: white;
+    padding: 5px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 20px; */
+    align-items: center;
+    color: rgb(45, 82, 0);
+    padding: 5px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    font-size: 20px;
+    border-bottom: solid 1px;
+  }
+
+  .infoBoxContent {
+    height: 100%;
+    overflow-y: scroll;
+    padding-right: 10px;
+  }
+
+  .infoBoxProfile {
+    margin: 10px;
+  }
+
+  .infoBoxHeadTag {
+    width: 200px;
+    height: 30px;
+    background-color: white;
+    border-color: rgb(45, 82, 0);
+    border: solid 2px;
+    color: rgb(45, 82, 0);
+    text-align: center;
+    padding: 3px;
+    font-size: 16px;
+    
+  }
+
+  .infoBoxProfileContent,
+  .infoBoxTreatmentPlanContent-Container{
+    display: block;
+    margin: 5px 0px 10px;
+    padding: 10px 5px;
+    border-radius: 5px;
+    background-color: rgb(230, 237, 222);
+    font-size: 14px;
+  }
+
+  .infoBoxProfileContent label,
+  .infoBoxTreatmentPlanContent label {
+    margin: 10px;
+  }
+  
+  .infoBoxTreatmentPlan{
+    margin: 10px;
+  }
+
+  .infoBoxTreatmentPlanContent{
+    margin: 5px 0px 10px;
+  }
+
+
+.infoBoxMedicines-Container {
+    display: flex;
+    justify-content: space-between; /* Align items between start and end of the container */
+    align-items: center; /* Vertically align items in the center */
+}
+
+.infoBoxTreatmentPlanContent-Container h3{
+    font-size: 15px;
+}
+
+.infoBoxMedicines {
+    padding: 10px 30px;
+}
+
+.infoBoxMedicines ol {
+    /* list-style-type: none; Remove default list styling */
+    padding: 0;
+}
+
+.infoBoxMedicines ol li {
+    margin-bottom: 5px;
+}
+
+.infoBoxMedicines ol li p {
+    margin: 0; /* Remove default margins */
+    color: #325317; /* Dark text color for the content */
+    font-weight: lighter;
+}
+
+.infoBoxMedicines strong{
+    margin: 5px;
+    color: black;
+}
+
+
+
+  .chatBoxBottom {
+    margin-top: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .chatMessageInput {
+    width: 80%;
+    height: 90px;
+    padding: 10px;
+  }
+  
+  .chatSubmitButton {
+    width: 70px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    margin: 10px;
+    cursor: pointer;
+    background-color: rgb(45, 82, 0);
+    color: white;
+  }
+  
+.infoMenuWrapper, 
+.infoBoxWrapper {
+    padding: 10px;
+    height: 100%;
+}
+
+.noPatientText {
+    position: absolute;
+    top: 10%;
+    font-size: 50px;
+    color: rgb(224, 220, 220);
+    cursor: default;
+  }
+  
+  @media screen and (max-width: 768px) {
+    .infoMenu {
+      flex: 1;
+    }
+  
+    .infoMenuInput {
+      display: none;
+    }
+  
+    .infoBox{
+      flex: 10;
+    }
+  
+  }

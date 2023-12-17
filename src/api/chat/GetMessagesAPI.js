@@ -53,7 +53,7 @@ function GetMessagesAPI(conversationId) {
                     "conversationId": "003",
                     "sender": "doctor1@gmail.com",
                     "senderRole": "doctor",
-                    "text": "Hi, I am doctor 2",
+                    "text": "Hi, I am doctor 1",
                     "createdAt": "2023-12-16T14:30:28.262Z",
                     "updatedAt": "2023-12-16T14:30:28.262Z",
                 }]

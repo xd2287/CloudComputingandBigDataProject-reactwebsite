@@ -4,17 +4,8 @@ import GetContactorInfoAPI from '../../api/GetContactorInfoAPI';
 
 function Conversation({conversation, currentUser, currentRole}) {
 
-    const [contactor, setContactor] = useState(null);
-
     const contactorEmail = conversation.members.find(m=>m !== currentUser.email);
-
-    useEffect(()=>{
-        const getContactor = async ()=>{
-            const getContactorInfoAPIReturn = await GetContactorInfoAPI(currentRole, contactorEmail);
-            setContactor(getContactorInfoAPIReturn);
-        };
-        getContactor();
-    }, [currentRole, contactorEmail]);
+    const contactor = JSON.parse(localStorage.getItem(contactorEmail));
     
     if (contactor !== null) {
         return (

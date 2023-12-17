@@ -21,22 +21,36 @@ function Messenger() {
     const [newMessage, setNewMessage] = useState("");
     const [receiverEmail, setReceiverEmail] = useState(null);
     const [receiverInfo, setReceiverInfo] = useState(null);
-
+    const [searchKeyword, setSearchKeyword] = useState('');
+    const [filteredConversations, setFilteredConversations] = useState([]);
     // const scrollRef = useRef();
 
     // console.log("userInfo.email",userInfo.email);
     useEffect(()=>{
         const getConversations = async ()=>{
-            const GetConversationsAPIResponse = await GetConversationsAPI(userInfo["email"]);
-            setConversations(GetConversationsAPIResponse)
+            const getConversationsAPIResponse = await GetConversationsAPI(userInfo["email"]);
+            
+            for (const conversationResponse of getConversationsAPIResponse) {
+                const receiverEmail = conversationResponse.members[0] === userInfo.email ? 
+                                        conversationResponse.members[1] :
+                                        conversationResponse.members[0]
+                if (localStorage.getItem(receiverEmail) === null) {
+                    const currReceiverInfo = await GetContactorInfoAPI(userRole, receiverEmail);
+                    localStorage.setItem(receiverEmail,JSON.stringify(currReceiverInfo));
+                }
+            }
+
+            setConversations(getConversationsAPIResponse);
+            setFilteredConversations(getConversationsAPIResponse);
         };
         getConversations();
     }, [userInfo.email]);
 
     useEffect(()=>{
         const getConversations = async ()=>{
-            const GetConversationsAPIResponse = await GetConversationsAPI(userInfo["email"]);
-            setConversations(GetConversationsAPIResponse)
+            const getConversationsAPIResponse = await GetConversationsAPI(userInfo["email"]);
+            setConversations(getConversationsAPIResponse);
+            setFilteredConversations(getConversationsAPIResponse);
         };
         
         const intervalId = setInterval(() => {
@@ -47,9 +61,6 @@ function Messenger() {
         };
         
     }, []);
-
-    // console.log("Set conversations");
-    // console.log(conversations);
 
     useEffect(()=>{
         const getMessages = async ()=> {
@@ -67,18 +78,21 @@ function Messenger() {
     },[currentChat]);
 
     useEffect(()=>{
-        const getReceiverInfo = async ()=> {
-            const currReceiverInfo = await GetContactorInfoAPI(userRole, receiverEmail);
-            setReceiverInfo(currReceiverInfo);
-            localStorage.setItem(receiverEmail,JSON.stringify(currReceiverInfo));
-        }
-        if (localStorage.getItem(receiverEmail) === null) {
-            getReceiverInfo();
-        }
-        else {
-            setReceiverInfo(JSON.parse(localStorage.getItem(receiverEmail)));
-        }
+        setReceiverInfo(JSON.parse(localStorage.getItem(receiverEmail)));
     },[receiverEmail]);
+
+    useEffect(()=>{
+        setFilteredConversations(
+            conversations.filter((c) =>
+                c.members
+                    .filter((member)=>member !== userInfo.email)
+                    .some((member) =>
+                        localStorage.getItem(member) !== null && 
+                        JSON.parse(localStorage.getItem(member)).name.toLowerCase().includes(searchKeyword.toLowerCase())
+                    )
+            )
+        );
+    }, [searchKeyword]);
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
@@ -108,8 +122,15 @@ function Messenger() {
             <div className='messenger'>
                 <div className='chatMenu'>
                     <div className='chatMenuWrapper'>
-                        <input placeholder="Search for friends" className="chatMenuInput" />
-                        {conversations.map((c) => (
+                        <div className='chatMenuInputContainer'>
+                            <input 
+                                placeholder={userRole==="patient"?"Search for doctors":"Search for patients"}
+                                className="chatMenuInput" 
+                                value={searchKeyword}
+                                onChange={(e) => setSearchKeyword(e.target.value)}
+                            />
+                        </div>
+                        {filteredConversations.map((c) => (
                             <div onClick={()=>setCurrentChat(c)}>
                                 <Conversation conversation={c} currentUser={userInfo} currentRole={userRole} receiverEmail={receiverEmail}/>
                             </div>
