@@ -11,7 +11,7 @@ function GetProfileAPI(ownRole, email) {
     }
     else if (ownRole === "doctor") {
         return {
-            name: 'Doctor 1',
+            name: 'doctor 1',
             email: 'doctor1@gmail.com',
             phone: '11111111',
             address: '113 W 112st, NY 10027',

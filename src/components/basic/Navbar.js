@@ -87,7 +87,7 @@ function Navbar() {
                         </li>
                         <li className='nav-item'>
                             <Link to={`/${localStorage.getItem("loggedInUserRole") === "doctor" ? "doctor-profile" : "patient-profile"}`} className='nav-links' onClick={closeMobileMenu}>
-                                {JSON.parse(localStorage.getItem("loggedInUserInfo")).userName}
+                                {JSON.parse(localStorage.getItem("loggedInUserInfo")).name}
                             </Link>
                         </li>
                     </ul>

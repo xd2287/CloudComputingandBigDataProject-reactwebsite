@@ -1,9 +1,10 @@
 import React from 'react';
+import Messenger from '../chat/Messenger';
 
 function ChatWithPatient() {
     return (
         <>
-          <div>Chat with Patients</div>  
+          <Messenger />
         </>
     );
 }

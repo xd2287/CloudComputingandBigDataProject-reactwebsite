@@ -4,14 +4,14 @@ function GetContactorInfoAPI(ownRole, email) {
     if (ownRole === "patient") {
         return {
             "name": email==="doctor1@gmail.com" ? "doctor 1" : "doctor 2",
-            "email": 'doctor1@gmail.com',
+            "email": email,
             "phone": '11111111',
         }
     }
     else if (ownRole === "doctor") {
         return {
-            "name": 'patient 1',
-            "email": 'patient1@gmail.com',
+            "name": email==="patient1@gmail.com" ? "patient 1" : "patient 2",
+            "email": email,
             "phone": '11111111',
         }
     }
