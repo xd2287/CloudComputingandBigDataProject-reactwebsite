@@ -9,6 +9,8 @@ function getInitials(name) {
 }
 
 function Message({message, own, senderName}) {
+    console.log("**");
+    console.log(message);
     return (
         <>
             <div className= {own ? 'message own': 'message'}>
@@ -19,6 +21,7 @@ function Message({message, own, senderName}) {
                     </p>
                 </div>
                 <div className='messageBottom'>
+                    {message.repliedByChatbot? "Replied by Chatbot | ":null}
                     {message.createdAt === "sending"? "sending" : format(message.createdAt)}
                 </div>
             </div>

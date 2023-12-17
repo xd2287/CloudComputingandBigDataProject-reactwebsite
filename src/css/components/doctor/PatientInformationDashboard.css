@@ -110,20 +110,50 @@
     margin: 10px;
   }
 
+  .infoBoxTreatmentPlanHead{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .infoBoxTreatmentPlanHead button,
+  .infoBoxTreatmentPlanContent-Head button{
+    border-radius: 5px;
+    height: 30px;
+    background-color: rgb(45, 82, 0);
+    color: white;
+    text-align: center;
+    padding: 3px;
+    font-size: 16px;
+  }
+
+  .infoBoxTreatmentPlanHead button:hover,
+  .infoBoxTreatmentPlanContent-Head button:hover{
+    cursor: pointer;
+  }
+
   .infoBoxTreatmentPlanContent{
     margin: 5px 0px 10px;
   }
 
 
 .infoBoxMedicines-Container {
-    display: flex;
+    /* display: flex; */
+    display: block;
     justify-content: space-between; /* Align items between start and end of the container */
     align-items: center; /* Vertically align items in the center */
 }
 
-.infoBoxTreatmentPlanContent-Container h3{
+.infoBoxTreatmentPlanContent-Head{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.infoBoxTreatmentPlanContent-Head h3{
     font-size: 15px;
 }
+
 
 .infoBoxMedicines {
     padding: 10px 30px;
@@ -149,6 +179,10 @@
     color: black;
 }
 
+.infoBoxMedicines input{
+    width: 100%;
+    margin: 5px;
+}
 
 
   .chatBoxBottom {

@@ -1,4 +1,4 @@
-function GetPatientsInfoAPI(senderEmail) {
+function GetPatientsInfoAPI(doctorEmail) {
     console.log("GetPatientsInfoAPI + 1")
     const mockPatients = [
         {
@@ -6,9 +6,9 @@ function GetPatientsInfoAPI(senderEmail) {
             email: 'patient1@gmail.com',
             phone: '11111111',
             treatmentPlan: [
-                {"TreatmentId":1, "Medicines":[{"MedicineName":"Aspirin","Dosage":"one capsule once a day","Indications":"Fever"}], "enabledReminder":false},
-                {"TreatmentId":2, "Medicines":[{"MedicineName":"Naproxen","Dosage":"two 500 mg tablets once a day","Indications":"tendonitis"}], "enabledReminder":true},
-                // {"TreatmentId":3, "Medicines":[{"MedicineName":"Naproxen","Dosage":"two 500 mg tablets once a day","Indications":"tendonitis"}], "enabledReminder":true},
+                {"TreatmentId":1, "Medicines":[{"MedicineName":"Aspirin","Dosage":"one capsule once a day","Indications":"Fever"}]},
+                {"TreatmentId":2, "Medicines":[{"MedicineName":"Naproxen","Dosage":"two 500 mg tablets once a day","Indications":"tendonitis"}]},
+                // {"TreatmentId":3, "Medicines":[{"MedicineName":"Naproxen","Dosage":"two 500 mg tablets once a day","Indications":"tendonitis"}]},
             ]
         },
         {
@@ -16,7 +16,7 @@ function GetPatientsInfoAPI(senderEmail) {
             email: 'patient2@gmail.com',
             phone: '11111111',
             treatmentPlan: [
-                {"TreatmentId":3, "Medicines":[{"MedicineName":"Naproxen","Dosage":"two 500 mg tablets once a day","Indications":"tendonitis"}, {"MedicineName":"Aspirin","Dosage":"one capsule once a day","Indications":"Fever"}], "enabledReminder":true},    
+                {"TreatmentId":3, "Medicines":[{"MedicineName":"Naproxen","Dosage":"two 500 mg tablets once a day","Indications":"tendonitis"}, {"MedicineName":"Aspirin","Dosage":"one capsule once a day","Indications":"Fever"}]},    
             ]
         },
     ];

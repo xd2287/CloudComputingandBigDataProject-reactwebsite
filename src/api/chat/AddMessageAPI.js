@@ -10,6 +10,7 @@ function AddMessageAPI(message, receiverEmail) {
         "conversationId": message.conversationId,
         "createdAt": message.createdAt,
         "updatedAt": message.updatedAt,
+        "repliedByChatbot": true,
     };
     const newMessages = message.senderRole==="patient" ? [message, mockDoctorResponseMessage] : [message];
     localStorage.setItem(message.conversationId, JSON.stringify([...conversation, ...newMessages]));

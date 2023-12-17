@@ -6,9 +6,10 @@ import '../../css/components/doctor/PatientInformationDashboard.css';
 // import Message from './Message';
 
 import GetPatientsInfoAPI from '../../api/GetPatientsInfoAPI';
-import GetMessagesAPI from '../../api/chat/GetMessagesAPI';
-import AddMessageAPI from '../../api/chat/AddMessageAPI';
-import GetContactorInfoAPI from '../../api/GetContactorInfoAPI';
+import SetTreatmentPlanAPI from '../../api/SetTreatmentPlanAPI';
+// import GetMessagesAPI from '../../api/chat/GetMessagesAPI';
+// import AddMessageAPI from '../../api/chat/AddMessageAPI';
+// import GetContactorInfoAPI from '../../api/GetContactorInfoAPI';
 
 function PatientInformationDashboard() {
 
@@ -18,8 +19,10 @@ function PatientInformationDashboard() {
     const [patients, setPatients] = useState([]);
     const [searchKeyword, setSearchKeyword] = useState('');
     const [filteredPatients, setFilteredPatients] = useState([]);
-    const [currentPatient, setCurrentPatient] = useState(null);
+    const [initalCurrentPatient, setInitialCurrentPatient] = useState(null);
+    const [currentPatient, setCurrentPatient] = useState(initalCurrentPatient);
 
+    const [isEditable, setIsEditable] = useState(false);
 
     useEffect(()=>{
         const getPatients = async ()=>{
@@ -44,10 +47,73 @@ function PatientInformationDashboard() {
             setPatients(getPatientsInfoAPIResponse);
             setFilteredPatients(getPatientsInfoAPIResponse);
             const updatedPatient = getPatientsInfoAPIResponse.filter((updatedP) => updatedP.email === p.email)[0];
+            setInitialCurrentPatient(updatedPatient);
             setCurrentPatient(updatedPatient);
+            setIsEditable(null);
         }
         getPatients();
     }
+
+    const handleChange = (event, treatmentId, medicineName) => {
+        const updatedTreatmentPlan = currentPatient.treatmentPlan.map((t) => {
+            if (t.TreatmentId === treatmentId) {
+              return {
+                ...t,
+                Medicines: t.Medicines.map((m) => {
+                    if (m.MedicineName === medicineName) {
+                        return {
+                        ...m,
+                        [event.target.name]: event.target.value,
+                        };
+                    }
+                  return m; // Return unchanged medicine for other cases
+                }),
+              };
+            }
+            return t; // Return unchanged treatment plan for other cases
+          });
+        setCurrentPatient({
+            ...currentPatient,
+            treatmentPlan: updatedTreatmentPlan
+        });
+    };
+
+    function currentTreatmentPlanChanged(json1, json2) {
+        const keys1 = Object.keys(json1);
+        const keys2 = Object.keys(json2);
+        keys1.sort();
+        keys2.sort();
+        for (let i = 0; i < keys1.length; i++) {
+            if (json1[keys1[i]] !== json2[keys2[i]]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    const handleEdit = (currTreatmentId) => {
+        const updatedIsEditable = isEditable===null? {} : JSON.parse(JSON.stringify(isEditable));
+        if (isEditable===null) {
+            currentPatient.treatmentPlan.map((t)=>{
+                updatedIsEditable[t.TreatmentId] = false;
+            })
+            updatedIsEditable[currTreatmentId] = true;
+        }
+        else {
+            updatedIsEditable[currTreatmentId] = !updatedIsEditable[currTreatmentId];
+        }
+        setIsEditable(updatedIsEditable);
+
+        if (!updatedIsEditable[currTreatmentId] && 
+            currentTreatmentPlanChanged(
+                initalCurrentPatient.treatmentPlan.filter((t)=>t.TreatmentId===currTreatmentId)[0], 
+                currentPatient.treatmentPlan.filter((t)=>t.TreatmentId===currTreatmentId)[0],
+            )){
+                SetTreatmentPlanAPI(userInfo.email, currentPatient.email, currTreatmentId, currentPatient.treatmentPlan);
+                setInitialCurrentPatient(currentPatient);
+                alert("Successfully updated the treatment plan with Id "+currTreatmentId);
+        }
+    };
 
     return (
         <>
@@ -95,20 +161,33 @@ function PatientInformationDashboard() {
                                             <div className='infoBoxHeadTag'>
                                                 Treatment Plan
                                             </div>
-                                            
+                                            <button className='newTreatmentPlan-create-button'>Create New Treatment Plan</button>
+                                            {/* <button onClick={handleEdit} className='profile-edit-button'>{isEditable ? 'Save' : 'Edit'}</button> */}
                                         </div>
                                         <div className='infoBoxTreatmentPlanContent'>
-                                            {currentPatient.treatmentPlan.map(plan => (
+                                            {currentPatient.treatmentPlan.map((plan,index) => (
                                                 <div key={plan.TreatmentId} className="infoBoxTreatmentPlanContent-Container">
-                                                    <h3>Treatment Plan Id: {plan.TreatmentId}</h3>
+                                                    <div className='infoBoxTreatmentPlanContent-Head'>
+                                                        <h3>Treatment Plan Id: {plan.TreatmentId}</h3>
+                                                        <button onClick={()=>handleEdit(plan.TreatmentId)} className='treatmentPlan-edit-button'>{isEditable===null ? 'Edit' : (isEditable[plan.TreatmentId] ? 'Save' : 'Edit')}</button>
+                                                    </div>
                                                     <div className="infoBoxMedicines-Container">
                                                         <div className="infoBoxMedicines">
                                                             <ol>
                                                                 {plan.Medicines.map((medicine, index) => (
                                                                     <li key={index}>
-                                                                        <p><strong>Medicine Name:</strong> <span>{medicine.MedicineName}</span></p>
-                                                                        <p><strong>Dosage:</strong> {medicine.Dosage}</p>
-                                                                        <p><strong>Indications:</strong> {medicine.Indications}</p>
+                                                                        <p>
+                                                                            <strong>Medicine Name:</strong>
+                                                                            <input type="text" name="MedicineName" value={medicine.MedicineName} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                        </p>
+                                                                        <p>
+                                                                            <strong>Dosage:</strong> 
+                                                                            <input type="text" name="Dosage" value={medicine.Dosage} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                        </p>
+                                                                        <p>
+                                                                            <strong>Indications:</strong> 
+                                                                            <input type="text" name="Indications" value={medicine.Indications} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                        </p>
                                                                     </li>
                                                                 ))}
                                                             </ol>
@@ -134,69 +213,3 @@ function PatientInformationDashboard() {
 }
 
 export default PatientInformationDashboard
-
-
-
-// return (
-//     <>
-//         <div className='messenger'>
-//             <div className='chatMenu'>
-//                 <div className='chatMenuWrapper'>
-//                     <div className='chatMenuInputContainer'>
-//                         <input 
-//                             placeholder="Search for friends" 
-//                             className="chatMenuInput" 
-//                             value={searchKeyword}
-//                             onChange={(e) => setSearchKeyword(e.target.value)}
-//                         />
-//                     </div>
-//                     {filteredConversations.map((c) => (
-//                         <div onClick={()=>setCurrentChat(c)}>
-//                             <span className="conversationName">
-//                                 {
-//                                     JSON.parse(localStorage.getItem(receiverEmail))
-//                                         ? JSON.parse(localStorage.getItem(receiverEmail)).name
-//                                         : null
-//                                 }
-//                             </span>
-
-//                         </div>
-//                     ))}
-//                 </div>
-//             </div>
-//             <div className='chatBox'>
-//                 <div className='chatBoxWrapper'>
-//                     {currentChat && receiverInfo ?
-//                         (<>
-//                             <div className='chatBoxHead'>
-//                                 <h2>{receiverInfo.name}</h2>
-//                             </div>
-//                             <div className='chatBoxTop'>
-//                                 {messages ? messages.map((m) => (
-//                                     <div>
-//                                         <Message message={m} own={m.sender === userInfo.email} senderName={m.sender === userInfo.email ? userInfo.name : receiverInfo.name}/>
-//                                     </div>
-//                                 )):null}
-//                             </div>
-//                             <div className='chatBoxBottom'>
-//                                 <textarea 
-//                                     className='chatMessageInput' 
-//                                     placeholder='write something...'
-//                                     onChange={(e)=>setNewMessage(e.target.value)}
-//                                     value={newMessage}
-//                                 ></textarea>
-//                                 <button className='chatSubmitButton' onClick={handleSubmit}>
-//                                     Send
-//                                 </button>
-//                             </div> </>
-//                         ) : ( 
-//                             <span className='noConversationText'>
-//                                 Open a conversation to start a chat.
-//                             </span>
-//                         )
-//                     }
-//                 </div>
-//             </div>
-//         </div>  
-//     </>
-// );
