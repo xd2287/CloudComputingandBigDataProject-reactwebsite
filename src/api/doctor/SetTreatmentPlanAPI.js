@@ -1,7 +1,7 @@
-function SetTreatmentPlanAPI(doctorEmail, patientEmail, treatmentPlanId, newTreatmentPlans) {
-    // newTreatmentPlans = [{"TreatmentId":1, "Medicines":[{"MedicineName":"Naproxen","quantity":2, "type": "tablet", "location": "mouth", "frequency": "daily", "duration": 4}]}]
+function SetTreatmentPlanAPI(doctorEmail, patientEmail, treatmentPlanId, updatedTreatmentPlans) {
+    // updatedTreatmentPlans = [{"TreatmentId":1, "Medicines":[{"MedicineName":"Naproxen","quantity":2, "type": "tablet", "location": "mouth", "frequency": "daily", "duration": 4}]}]
     console.log("updated treatment plan:");
-    console.log(newTreatmentPlans);
+    console.log(updatedTreatmentPlans);
     return (
         true
     )

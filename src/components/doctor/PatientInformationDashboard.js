@@ -24,6 +24,8 @@ function PatientInformationDashboard() {
 
     const [isEditable, setIsEditable] = useState(false);
 
+    const [displayStatus, setDisplayStatus] = useState("display&edit");
+
     useEffect(()=>{
         const getPatients = async ()=>{
             const getPatientsInfoAPIResponse = await GetPatientsInfoAPI(userInfo["email"]);
@@ -50,6 +52,7 @@ function PatientInformationDashboard() {
             setInitialCurrentPatient(updatedPatient);
             setCurrentPatient(updatedPatient);
             setIsEditable(null);
+            setDisplayStatus("display&edit");
         }
         getPatients();
     }
@@ -143,73 +146,76 @@ function PatientInformationDashboard() {
                                 <div className='infoBoxHead'>
                                     <h2>{currentPatient.name}</h2>
                                 </div>
-                                <div className='infoBoxContent'>
-                                    <div className='infoBoxProfile'>
-                                        <div className='infoBoxProfileHead'>
-                                            <div className='infoBoxHeadTag'>
-                                                Personal Information
+                                {displayStatus === "display&edit"
+                                    ? <div className='infoBoxContent'>
+                                        <div className='infoBoxProfile'>
+                                            <div className='infoBoxProfileHead'>
+                                                <div className='infoBoxHeadTag'>
+                                                    Personal Information
+                                                </div>
+                                            </div>
+                                            <div className='infoBoxProfileContent'>
+                                                <p> <label>Name:</label> {currentPatient.name}</p>
+                                                <p> <label>Email:</label> {currentPatient.email}</p>
+                                                <p> <label>Phone:</label> {currentPatient.phone}</p>
                                             </div>
                                         </div>
-                                        <div className='infoBoxProfileContent'>
-                                            <p> <label>Name:</label> {currentPatient.name}</p>
-                                            <p> <label>Email:</label> {currentPatient.email}</p>
-                                            <p> <label>Phone:</label> {currentPatient.phone}</p>
-                                        </div>
-                                    </div>
-                                    <div className='infoBoxTreatmentPlan'>
-                                        <div className='infoBoxTreatmentPlanHead'>
-                                            <div className='infoBoxHeadTag'>
-                                                Treatment Plan
+                                        <div className='infoBoxTreatmentPlan'>
+                                            <div className='infoBoxTreatmentPlanHead'>
+                                                <div className='infoBoxHeadTag'>
+                                                    Treatment Plan
+                                                </div>
+                                                <button className='newTreatmentPlan-create-button' onClick={()=>setDisplayStatus("create")}>Create New Treatment Plan</button>
+                                                {/* <button onClick={handleEdit} className='profile-edit-button'>{isEditable ? 'Save' : 'Edit'}</button> */}
                                             </div>
-                                            <button className='newTreatmentPlan-create-button'>Create New Treatment Plan</button>
-                                            {/* <button onClick={handleEdit} className='profile-edit-button'>{isEditable ? 'Save' : 'Edit'}</button> */}
-                                        </div>
-                                        <div className='infoBoxTreatmentPlanContent'>
-                                            {currentPatient.treatmentPlan.map((plan,index) => (
-                                                <div key={plan.TreatmentId} className="infoBoxTreatmentPlanContent-Container">
-                                                    <div className='infoBoxTreatmentPlanContent-Head'>
-                                                        <h3>Treatment Plan Id: {plan.TreatmentId}</h3>
-                                                        <button onClick={()=>handleEdit(plan.TreatmentId)} className='treatmentPlan-edit-button'>{isEditable===null ? 'Edit' : (isEditable[plan.TreatmentId] ? 'Save' : 'Edit')}</button>
-                                                    </div>
-                                                    <div className="infoBoxMedicines-Container">
-                                                        <div className="infoBoxMedicines">
-                                                            <ol>
-                                                                {plan.Medicines.map((medicine, index) => (
-                                                                    <li key={index}>
-                                                                        <p>
-                                                                            <strong>Medicine Name:</strong>
-                                                                            <input type="text" name="MedicineName" value={medicine.MedicineName} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
-                                                                        </p>
-                                                                        <p>
-                                                                            <strong>Quantity:</strong> 
-                                                                            <input type="text" name="quantity" value={medicine.quantity} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
-                                                                        </p>
-                                                                        <p>
-                                                                            <strong>Type(liquid, capsule, tablet, etc):</strong> 
-                                                                            <input type="text" name="type" value={medicine.type} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
-                                                                        </p>
-                                                                        <p>
-                                                                            <strong>Location(mouth, ear, etc):</strong> 
-                                                                            <input type="text" name="location" value={medicine.location} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
-                                                                        </p>
-                                                                        <p>
-                                                                            <strong>Frequency:</strong> 
-                                                                            <input type="text" name="frequency" value={medicine.frequency} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
-                                                                        </p>
-                                                                        <p>
-                                                                            <strong>Duration(week):</strong> 
-                                                                            <input type="text" name="duration" value={medicine.duration} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
-                                                                        </p>
-                                                                    </li>
-                                                                ))}
-                                                            </ol>
+                                            <div className='infoBoxTreatmentPlanContent'>
+                                                {currentPatient.treatmentPlan.map((plan) => (
+                                                    <div key={plan.TreatmentId} className="infoBoxTreatmentPlanContent-Container">
+                                                        <div className='infoBoxTreatmentPlanContent-Head'>
+                                                            <h3>Treatment Plan Id: {plan.TreatmentId}</h3>
+                                                            <button onClick={()=>handleEdit(plan.TreatmentId)} className='treatmentPlan-edit-button'>{isEditable===null ? 'Edit' : (isEditable[plan.TreatmentId] ? 'Save' : 'Edit')}</button>
+                                                        </div>
+                                                        <div className="infoBoxMedicines-Container">
+                                                            <div className="infoBoxMedicines">
+                                                                <ol>
+                                                                    {plan.Medicines.map((medicine, index) => (
+                                                                        <li key={index}>
+                                                                            <p>
+                                                                                <strong>Medicine Name:</strong>
+                                                                                <input type="text" name="MedicineName" value={medicine.MedicineName} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                            </p>
+                                                                            <p>
+                                                                                <strong>Quantity:</strong> 
+                                                                                <input type="text" name="quantity" value={medicine.quantity} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                            </p>
+                                                                            <p>
+                                                                                <strong>Type(liquid, capsule, tablet, etc):</strong> 
+                                                                                <input type="text" name="type" value={medicine.type} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                            </p>
+                                                                            <p>
+                                                                                <strong>Location(mouth, ear, etc):</strong> 
+                                                                                <input type="text" name="location" value={medicine.location} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                            </p>
+                                                                            <p>
+                                                                                <strong>Frequency:</strong> 
+                                                                                <input type="text" name="frequency" value={medicine.frequency} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                            </p>
+                                                                            <p>
+                                                                                <strong>Duration(week):</strong> 
+                                                                                <input type="text" name="duration" value={medicine.duration} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                            </p>
+                                                                        </li>
+                                                                    ))}
+                                                                </ol>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div> 
-                                </div>
+                                                ))}
+                                            </div>
+                                        </div> 
+                                    </div>
+                                    : null
+                                }
                             </>
                             : ( 
                                 <span className='noPatientText'>
