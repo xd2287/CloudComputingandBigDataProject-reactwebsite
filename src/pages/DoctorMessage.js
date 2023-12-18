@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 // import DoctorProfile from '../components/doctor/DoctorProfile';
-import Profile from '../components/user/Profile';
+import MessageHint from '../components/doctor/MessageHint';
 import Footer from '../components/basic/Footer';
 
 import '../css/App.css'
@@ -12,7 +12,7 @@ function DoctorProfile() {
     return (
         <>
             {/* <DoctorProfile /> */}
-            <Profile />
+            <MessageHint />
             <Footer />
         </>
     );

@@ -24,7 +24,7 @@ function PatientHome() {
             <div className="content-placement">
                 <DoctorNavbar onNavigate={onNavigate} current={currentTab} />
                 {currentTab === 'patientInformation' && <PatientInformation />}
-                {currentTab === 'lookForMedicine' && <LoofForMedicine />}
+                {/* {currentTab === 'lookForMedicine' && <LoofForMedicine />} */}
                 {currentTab === 'chatWithPatient' && <ChatWithPatient />}
             </div>
             <Footer />

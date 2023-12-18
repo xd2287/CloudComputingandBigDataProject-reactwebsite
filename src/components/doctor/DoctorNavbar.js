@@ -11,12 +11,12 @@ const PatientNavbar = ({ onNavigate, current }) => {
       >
         Patient Information
       </div>
-      <div
+      {/* <div
         className={`content-nav-item ${current === 'lookForMedicine' ? 'active' : ''}`}
         onClick={() => onNavigate('lookForMedicine')}
       >
         Look for Medicines
-      </div>
+      </div> */}
       <div
         className={`content-nav-item ${current === 'chatWithPatient' ? 'active' : ''}`}
         onClick={() => onNavigate('chatWithPatient')}

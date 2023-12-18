@@ -45,6 +45,14 @@
     margin-right: 2rem;
   }
   
+  .messageHintImg{
+    margin-top: 15px;
+  }
+
+  .messageHintImg:hover{
+    cursor: pointer;
+  }
+
   .nav-item {
     height: 80px;
   }

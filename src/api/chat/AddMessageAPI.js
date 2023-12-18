@@ -3,7 +3,7 @@ function AddMessageAPI(message, receiverEmail) {
     // Return: if message.senderRole is patient, return {"status": true, "data": [newMessage, responsedMessage from receiver]}; 
     //         if message.senderRole is doctor, return {}
     const conversation = JSON.parse(localStorage.getItem(message.conversationId));
-    const mockDoctorResponseMessage = {
+    const mockChatbotResponseMessage = {
         "sender": receiverEmail,
         "senderRole": "doctor",
         "text": "auto-response to patient",
@@ -12,7 +12,7 @@ function AddMessageAPI(message, receiverEmail) {
         "updatedAt": message.updatedAt,
         "repliedByChatbot": true,
     };
-    const newMessages = message.senderRole==="patient" ? [message, mockDoctorResponseMessage] : [message];
+    const newMessages = message.senderRole==="patient" ? [message, mockChatbotResponseMessage] : [message];
     localStorage.setItem(message.conversationId, JSON.stringify([...conversation, ...newMessages]));
     // simulate the deplay of API access
     return new Promise((resolve) => {

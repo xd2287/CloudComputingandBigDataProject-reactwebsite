@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 // import { Button } from './Button';
 import '../../css/components/basic/Navbar.css'
 import doctor from '../../assets/doctor.png'
+import message from '../../assets/message.png'
 
 function Navbar() {
     // const data = useLocation();
@@ -75,6 +76,11 @@ function Navbar() {
                         <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
                     </div>
                     <ul className={click ? 'nav-menu active' : 'nav-menu'}>
+                        {/* {localStorage.getItem("loggedInUserRole") === "doctor"
+                            ? <Link to="/doctor-message" onClick={closeMobileMenu}>
+                                <img src={message}  alt="" style={{ width: '50px', height: '50px' }} className='messageHintImg'/>
+                              </Link> 
+                            : null} */}
                         <li className='nav-item'>
                             <Link to={`/${localStorage.getItem("loggedInUserRole") === "doctor" ? "doctor-home" : "patient-home"}`} className='nav-links' onClick={closeMobileMenu}>
                                 Home

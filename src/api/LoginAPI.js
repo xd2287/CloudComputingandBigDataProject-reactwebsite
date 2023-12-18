@@ -1,6 +1,7 @@
 // import React from 'react'
 
 function LoginAPI(role, email, password) {
+  // hint 
   console.log("role: "+role);
   console.log("email: "+email);
   console.log("password: "+password);

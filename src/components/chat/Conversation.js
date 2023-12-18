@@ -12,6 +12,7 @@ function Conversation({conversation, currentUser, currentRole}) {
             <>
                 <div className='conversation'>
                     <span className="conversationName">{contactor.name}</span>
+                    {true?null:<span className="unreadReminder"></span>}
                 </div>
             </>
         );
