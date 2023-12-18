@@ -7,4 +7,4 @@ function AddTreatmentPlanAPI(doctorEmail, patientEmail, newTreatmentPlan) {
     )
 }
 
-export default SetTreatmentPlanAPI;
+export default AddTreatmentPlanAPI;
