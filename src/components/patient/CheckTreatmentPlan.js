@@ -36,8 +36,11 @@ function CheckTreatmentPlan() {
                                     {plan.Medicines.map((medicine, index) => (
                                         <li key={index}>
                                             <p><strong>Medicine Name:</strong> <span>{medicine.MedicineName}</span></p>
-                                            <p><strong>Dosage:</strong> {medicine.Dosage}</p>
-                                            <p><strong>Indications:</strong> {medicine.Indications}</p>
+                                            <p><strong>Quantity:</strong> {medicine.quantity}</p>
+                                            <p><strong>Type(liquid, capsule, tablet, etc):</strong> {medicine.type}</p>
+                                            <p><strong>Location(mouth, ear, etc):</strong> {medicine.location}</p>
+                                            <p><strong>Frequency:</strong> {medicine.frequency}</p>
+                                            <p><strong>Duration(week):</strong> {medicine.duration}</p>
                                         </li>
                                     ))}
                                 </ol>

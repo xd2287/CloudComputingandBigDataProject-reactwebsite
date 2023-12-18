@@ -6,8 +6,8 @@ function GetPatientsInfoAPI(doctorEmail) {
             email: 'patient1@gmail.com',
             phone: '11111111',
             treatmentPlan: [
-                {"TreatmentId":1, "Medicines":[{"MedicineName":"Aspirin","Dosage":"one capsule once a day","Indications":"Fever"}]},
-                {"TreatmentId":2, "Medicines":[{"MedicineName":"Naproxen","Dosage":"two 500 mg tablets once a day","Indications":"tendonitis"}]},
+                {"TreatmentId":1, "Medicines":[{"MedicineName":"Aspirin", "quantity":1, "type": "capsule", "location": "mouth", "frequency": "daily", "duration": 4}]},
+                {"TreatmentId":2, "Medicines":[{"MedicineName":"Naproxen","quantity":2, "type": "tablet", "location": "mouth", "frequency": "daily", "duration": 4}]},
                 // {"TreatmentId":3, "Medicines":[{"MedicineName":"Naproxen","Dosage":"two 500 mg tablets once a day","Indications":"tendonitis"}]},
             ]
         },
@@ -16,7 +16,7 @@ function GetPatientsInfoAPI(doctorEmail) {
             email: 'patient2@gmail.com',
             phone: '11111111',
             treatmentPlan: [
-                {"TreatmentId":3, "Medicines":[{"MedicineName":"Naproxen","Dosage":"two 500 mg tablets once a day","Indications":"tendonitis"}, {"MedicineName":"Aspirin","Dosage":"one capsule once a day","Indications":"Fever"}]},    
+                {"TreatmentId":3, "Medicines":[{"MedicineName":"Naproxen","quantity":2, "type": "tablet", "location": "mouth", "frequency": "daily", "duration": 4}]},    
             ]
         },
     ];

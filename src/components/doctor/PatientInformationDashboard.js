@@ -181,12 +181,24 @@ function PatientInformationDashboard() {
                                                                             <input type="text" name="MedicineName" value={medicine.MedicineName} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
                                                                         </p>
                                                                         <p>
-                                                                            <strong>Dosage:</strong> 
-                                                                            <input type="text" name="Dosage" value={medicine.Dosage} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                            <strong>Quantity:</strong> 
+                                                                            <input type="text" name="quantity" value={medicine.quantity} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
                                                                         </p>
                                                                         <p>
-                                                                            <strong>Indications:</strong> 
-                                                                            <input type="text" name="Indications" value={medicine.Indications} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                            <strong>Type(liquid, capsule, tablet, etc):</strong> 
+                                                                            <input type="text" name="type" value={medicine.type} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                        </p>
+                                                                        <p>
+                                                                            <strong>Location(mouth, ear, etc):</strong> 
+                                                                            <input type="text" name="location" value={medicine.location} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                        </p>
+                                                                        <p>
+                                                                            <strong>Frequency:</strong> 
+                                                                            <input type="text" name="frequency" value={medicine.frequency} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
+                                                                        </p>
+                                                                        <p>
+                                                                            <strong>Duration(week):</strong> 
+                                                                            <input type="text" name="duration" value={medicine.duration} onChange={(event)=>handleChange(event, plan.TreatmentId, medicine.MedicineName)} disabled={isEditable===null ? true : !isEditable[plan.TreatmentId]} />
                                                                         </p>
                                                                     </li>
                                                                 ))}
