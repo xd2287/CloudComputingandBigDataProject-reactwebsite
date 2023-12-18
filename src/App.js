@@ -10,7 +10,6 @@ import PatientHome from './pages/PatientHome'
 import PatientProfile from './pages/PatientProfile'
 import DoctorHome from './pages/DoctorHome'
 import DoctorProfile from './pages/DoctorProfile'
-import DoctorMessage from './pages/DoctorMessage'
 
 function App() {
   return (
@@ -25,7 +24,6 @@ function App() {
           <Route path='/patient-profile' Component={PatientProfile} />
           <Route path='/doctor-home' Component={DoctorHome} />
           <Route path='/doctor-profile' Component={DoctorProfile} />
-          <Route path='/doctor-message' Component={DoctorMessage} />
         </Routes>
       </Router>
     </>

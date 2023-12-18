@@ -8,7 +8,7 @@ import Message from './Message';
 import GetConversationsAPI from '../../api/chat/GetConversationsAPI';
 import GetMessagesAPI from '../../api/chat/GetMessagesAPI';
 import AddMessageAPI from '../../api/chat/AddMessageAPI';
-import GetContactorInfoAPI from '../../api/GetContactorInfoAPI';
+import GetContactorInfoAPI from '../../api/chat/GetContactorInfoAPI';
 
 function Messenger() {
 

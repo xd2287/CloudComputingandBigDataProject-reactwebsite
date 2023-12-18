@@ -8,8 +8,8 @@ import '../../css/components/user/LoginSignupForm.css';
 import user_icon from '../../assets/person.png'
 import email_icon from '../../assets/email.png'
 import password_icon from '../../assets/password.png'
-import SignUpAPI from '../../api/SignUpAPI';
-import LoginAPI from '../../api/LoginAPI';
+import SignUpAPI from '../../api/user/SignUpAPI';
+import LoginAPI from '../../api/user/LoginAPI';
 
 const LoginSignupForm = ({name}) => {
 

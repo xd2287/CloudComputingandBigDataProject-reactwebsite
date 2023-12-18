@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import '../../css/components/chat/Conversation.css';
-import GetContactorInfoAPI from '../../api/GetContactorInfoAPI';
+import GetContactorInfoAPI from '../../api/chat/GetContactorInfoAPI';
 
 function Conversation({conversation, currentUser, currentRole}) {
 

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 // import { useLocation, useNavigate,Link } from "react-router-dom";
-import GetTreatmentPlanAPI from '../../api/GetTreatmentPlanAPI';
-import SetTreatmentPlanReminder from '../../api/SetTreatmentPlanReminder';
+import GetTreatmentPlanAPI from '../../api/patient/GetTreatmentPlanAPI';
+import SetTreatmentPlanReminder from '../../api/patient/SetTreatmentPlanReminder';
 import enabled_alarm from '../../assets/enabled_alarm.png'
 import disabled_alarm from '../../assets/disabled_alarm.png'
 

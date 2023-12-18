@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../../css/components/user/Profile.css'; // Make sure to create a corresponding CSS file
-import SetDoctorProfileAPI from '../../api/SetProfileAPI';
-import GetDoctorProfileAPI from '../../api/GetProfileAPI';
+import SetDoctorProfileAPI from '../../api/user/SetProfileAPI';
+import GetDoctorProfileAPI from '../../api/user/GetProfileAPI';
 
 function Profile() {
     const userInfo = JSON.parse(localStorage.getItem("loggedInUserInfo"));

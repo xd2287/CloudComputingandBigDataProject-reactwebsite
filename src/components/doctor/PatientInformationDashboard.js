@@ -5,8 +5,8 @@ import '../../css/components/doctor/PatientInformationDashboard.css';
 // import Conversation from './Conversation';
 // import Message from './Message';
 
-import GetPatientsInfoAPI from '../../api/GetPatientsInfoAPI';
-import SetTreatmentPlanAPI from '../../api/SetTreatmentPlanAPI';
+import GetPatientsInfoAPI from '../../api/doctor/GetPatientsInfoAPI';
+import SetTreatmentPlanAPI from '../../api/doctor/SetTreatmentPlanAPI';
 // import GetMessagesAPI from '../../api/chat/GetMessagesAPI';
 // import AddMessageAPI from '../../api/chat/AddMessageAPI';
 // import GetContactorInfoAPI from '../../api/GetContactorInfoAPI';
