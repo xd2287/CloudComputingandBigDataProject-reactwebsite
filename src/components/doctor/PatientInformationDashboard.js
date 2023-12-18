@@ -1,12 +1,11 @@
 import React, {useState, useEffect} from 'react';
 
+import '../../css/App.css';
 import '../../css/components/doctor/PatientInformationDashboard.css';
-
-// import Conversation from './Conversation';
-// import Message from './Message';
 
 import GetPatientsInfoAPI from '../../api/doctor/GetPatientsInfoAPI';
 import SetTreatmentPlanAPI from '../../api/doctor/SetTreatmentPlanAPI';
+import AddTreatmentPlanAPI from '../../api/doctor/AddTreatmentPlanAPI';
 // import GetMessagesAPI from '../../api/chat/GetMessagesAPI';
 // import AddMessageAPI from '../../api/chat/AddMessageAPI';
 // import GetContactorInfoAPI from '../../api/GetContactorInfoAPI';
@@ -21,10 +20,11 @@ function PatientInformationDashboard() {
     const [filteredPatients, setFilteredPatients] = useState([]);
     const [initalCurrentPatient, setInitialCurrentPatient] = useState(null);
     const [currentPatient, setCurrentPatient] = useState(initalCurrentPatient);
-
     const [isEditable, setIsEditable] = useState(false);
-
     const [displayStatus, setDisplayStatus] = useState("display&edit");
+    const [medicineDivs, setMedicineDivs] = useState([]);
+    const [treatmentPlanId, setTreatmentPlanId] = useState(null);
+    const [medicineInputs, setMedicineInputs] = useState([]);
 
     useEffect(()=>{
         const getPatients = async ()=>{
@@ -53,6 +53,9 @@ function PatientInformationDashboard() {
             setCurrentPatient(updatedPatient);
             setIsEditable(null);
             setDisplayStatus("display&edit");
+            setMedicineDivs([]);
+            setTreatmentPlanId(null);
+            setMedicineInputs([]);
         }
         getPatients();
     }
@@ -117,6 +120,99 @@ function PatientInformationDashboard() {
                 alert("Successfully updated the treatment plan with Id "+currTreatmentId);
         }
     };
+
+    const handleAddMedicine = () => {
+        setDisplayStatus("create");
+        const newMedicineForm = (
+            <div className='createNewTPMedicineContent'>
+                <p>
+                    <strong>Medicine Name:</strong>
+                    <input type="text" name="MedicineName" placeholder='input medicine name' onChange={(e) => handleInputChange(e, medicineDivs.length)} />
+                </p>
+                <p>
+                    <strong>Quantity:</strong> 
+                    <input type="text" name="quantity" placeholder='input quantity' onChange={(e) => handleInputChange(e, medicineDivs.length)}/>
+                </p>
+                <p>
+                    <strong>Type(liquid, capsule, tablet, etc):</strong> 
+                    <input type="text" name="type" placeholder='input type' onChange={(e) => handleInputChange(e, medicineDivs.length)}/>
+                </p>
+                <p>
+                    <strong>Location(mouth, ear, etc):</strong> 
+                    <input type="text" name="location" placeholder='input location' onChange={(e) => handleInputChange(e, medicineDivs.length)}/>
+                </p>
+                <p>
+                    <strong>Frequency:</strong> 
+                    <input type="text" name="frequency" placeholder='input frequency' onChange={(e) => handleInputChange(e, medicineDivs.length)}/>
+                </p>
+                <p>
+                    <strong>Duration(week):</strong> 
+                    <input type="text" name="duration" placeholder='input duration' onChange={(e) => handleInputChange(e, medicineDivs.length)}/>
+                </p>
+            </div>
+        )
+        const newMedicineDelete = ( 
+                <div className='createNewTPMedicineDelete'>
+                    <button className='createNewTPMedicineButton' onClick={() => handleDeleteMedicine(medicineDivs.length)}> X </button>
+                </div>
+        )
+        setMedicineDivs([...medicineDivs, {"form":newMedicineForm, "delete":newMedicineDelete}]);
+    }
+
+    const handleDeleteMedicine = (indexToDelete) => {
+        const updatedMedicineDivs = medicineDivs.filter((_, index) => index !== indexToDelete);
+        setMedicineDivs(updatedMedicineDivs);
+    };
+
+    const handleInputChange = (e, medicineIndex) => {
+        const newInputs = medicineInputs;
+        if (medicineIndex >= newInputs.length) {
+            newInputs.push({});
+        }
+        newInputs[medicineIndex][e.target.name] = e.target.value;
+        setMedicineInputs(newInputs);
+    };
+
+    const handleCreateSubmit = () => {
+        console.log(treatmentPlanId);
+        console.log(medicineInputs);
+        console.log(currentPatient.name);
+        console.log(userInfo.name);
+        var valid = true;
+        if (treatmentPlanId === null || medicineInputs.length === 0) {
+            valid = false;
+        }
+        else {
+            for (const medicineInput of medicineInputs) {
+                console.log(medicineInput["quantity"]);
+                if (!medicineInput["MedicineName"] || 
+                    !medicineInput["quantity"] ||
+                    !medicineInput["type"] ||
+                    !medicineInput["location"] ||
+                    !medicineInput["frequency"] ||
+                    !medicineInput["duration"]) {
+                        valid = false;
+                }
+            }
+        }
+        console.log(valid)
+        if (!valid){
+            alert("Please fill in all feilds");
+        }
+        else {
+            const addTreatmentPlan = async ()=>{
+                const addTreatmentPlanAPIResponse = await AddTreatmentPlanAPI(userInfo.name, currentPatient.name, {"TreatmentId":treatmentPlanId, "Medicines":medicineInputs});
+                if (addTreatmentPlanAPIResponse) {
+                    alert("Successfully created a new treatment plan");
+                    setDisplayStatus("display&edit");
+                }
+                else {
+                    alert("Fail to create a new treatment plan");
+                }
+            };
+            addTreatmentPlan();
+        }
+    }
 
     return (
         <>
@@ -214,7 +310,27 @@ function PatientInformationDashboard() {
                                             </div>
                                         </div> 
                                     </div>
-                                    : null
+                                    : <div className='createNewTPContainer'>
+                                        <div className='createNewTPHead'>
+                                            <div className='createNewTPId'>
+                                                <strong>Treatment Id:</strong>
+                                                <input type="text"  placeholder='input Treatment Id' onChange={(e) => setTreatmentPlanId(e.target.value)}/>
+                                            </div>
+                                            <button className='newTreatmentPlan-create-button' onClick={handleAddMedicine}>Add New Medicine</button>
+                                        </div>
+                                        <div className='createNewTPContent'>
+                                            {medicineDivs.map((medicineDiv, index) => (
+                                                <div className='createNewTPMedicine'>
+                                                    {medicineDiv.form}
+                                                    {index+1===medicineDivs.length? medicineDiv.delete:null}
+                                                </div>
+                                            ))}
+                                        </div>
+                                        <div className='createNewTPBottom' onClick={handleCreateSubmit}>
+                                            <button>Create</button>
+                                        </div>
+
+                                    </div>
                                 }
                             </>
                             : ( 

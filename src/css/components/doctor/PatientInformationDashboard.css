@@ -68,7 +68,7 @@
     border-bottom: solid 1px;
   }
 
-  .infoBoxContent {
+  .infoBoxContent{
     height: 100%;
     overflow-y: scroll;
     padding-right: 10px;
@@ -110,14 +110,17 @@
     margin: 10px;
   }
 
-  .infoBoxTreatmentPlanHead{
+  .infoBoxTreatmentPlanHead,
+  .createNewTPHead{
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   
   .infoBoxTreatmentPlanHead button,
-  .infoBoxTreatmentPlanContent-Head button{
+  .infoBoxTreatmentPlanContent-Head button,
+  .createNewTPHead button,
+  .createNewTPBottom button{
     border-radius: 5px;
     height: 30px;
     background-color: rgb(45, 82, 0);
@@ -183,31 +186,6 @@
     width: 100%;
     margin: 5px;
 }
-
-
-  .chatBoxBottom {
-    margin-top: 5px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .chatMessageInput {
-    width: 80%;
-    height: 90px;
-    padding: 10px;
-  }
-  
-  .chatSubmitButton {
-    width: 70px;
-    height: 40px;
-    border: none;
-    border-radius: 5px;
-    margin: 10px;
-    cursor: pointer;
-    background-color: rgb(45, 82, 0);
-    color: white;
-  }
   
 .infoMenuWrapper, 
 .infoBoxWrapper {
@@ -237,3 +215,55 @@
     }
   
   }
+
+  .createNewTPContainer{
+    height: 100%;
+    padding-right: 10px;
+  }
+
+  .createNewTPHead{
+    height: 50px;
+  }
+
+  .createNewTPHead input{
+    margin-left: 10px 
+  }
+
+  .createNewTPContent{
+    height: 380px;
+    overflow-y: scroll;
+  }
+
+  .createNewTPMedicine{
+    display: flex;
+    padding: 10px;
+    margin: 10px;
+    justify-content: space-between;
+    background-color: rgb(230, 237, 222);
+  }
+
+  .createNewTPMedicineContent p{
+    margin: 10px;
+  }
+
+  .createNewTPMedicineContent input{
+    margin-left: 10px;
+  }
+
+  .createNewTPMedicineDelete button{
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    background-color: rgb(45, 82, 0);
+    color: white;
+  }
+
+  .createNewTPBottom{
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+  /* .createNewTPBottom button{
+    width: 150px;
+  } */

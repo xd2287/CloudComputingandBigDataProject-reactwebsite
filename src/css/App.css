@@ -46,3 +46,7 @@
   .content-placement{
     height: 82vh;
   }
+
+  button:hover{
+    cursor: pointer;
+  }
