@@ -1,17 +1,41 @@
-// import React from 'react'
+import axios from 'axios';
 
-function SignUpAPI(role, name, email, password, address, insuranceCompany, insuranceNumber, company) {
-  console.log("role: "+role);
-  console.log("name: "+name);
-  console.log("email: "+email);
-  console.log("password: "+password);
-  console.log("address: "+address);
-  console.log("insuranceCompany: "+insuranceCompany);
-  console.log("insuranceNumber: "+insuranceNumber);
-  console.log("company: "+company);
-  return (
-    true
-  )
+async function SignUpAPI(role, name, email, password, phone, address, insuranceCompany, insuranceNumber, company) {
+  if(role == 'patient'){
+    response = await axios.post(
+      'https://0455gwuqd1.execute-api.us-east-1.amazonaws.com/test/userFunctionality',
+        {
+          "action": "signUp",
+          "userType": "Patient",
+          "userName": name,
+          "email": email,
+          "password": password,
+          "phone": phone,
+          "address": address,
+          "insuranceNumber": insuranceNumber,
+          "insuranceCompany": insuranceCompany
+        }
+    );
+    return response;
+  }
+
+  if (role == 'doctor'){
+    response = await axios.post(
+      'https://0455gwuqd1.execute-api.us-east-1.amazonaws.com/test/userFunctionality',
+        {
+          "action": "signUp",
+          "userType": "Patient",
+          "userName": name,
+          "email": email,
+          "password": password,
+          "phone": phone,
+          "address": address,
+          "company": company
+        }
+    );
+
+  return response;
+  }
 }
 
-export default SignUpAPI
+export default SignUpAPI;

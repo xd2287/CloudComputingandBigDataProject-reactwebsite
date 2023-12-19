@@ -1,22 +1,27 @@
-function GetProfileAPI(ownRole, email) {
+import axios from 'axios';
+async function GetProfileAPI(ownRole, email) {
     if (ownRole === "patient") {
-        return {
-            name: 'patient 1',
-            email: 'patient1@gmail.com',
-            phone: '11111111',
-            address: '113 W 112st, NY 10027',
-            insuranceCompany: 'Aetna Health',
-            insuranceNumber: 'xxxxxxxxxx',
-        }
+
+        profile = await axios.post(
+            'https://0455gwuqd1.execute-api.us-east-1.amazonaws.com/test/userFunctionality',
+            {
+                userType: "Patient",
+                email: email
+            }
+          );
+
+        return profile;
     }
     else if (ownRole === "doctor") {
-        return {
-            name: 'doctor 1',
-            email: 'doctor1@gmail.com',
-            phone: '11111111',
-            address: '113 W 112st, NY 10027',
-            company: 'xxxxxxx'
-        }
+        profile = await axios.post(
+            'https://0455gwuqd1.execute-api.us-east-1.amazonaws.com/test/userFunctionality',
+            {
+                userType: "Doctor",
+                email: email
+            }
+          );
+
+        return profile;
     }
 }
 

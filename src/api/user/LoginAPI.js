@@ -1,23 +1,37 @@
-// import React from 'react'
+import axios from 'axios';
 
-function LoginAPI(role, email, password) {
+async function LoginAPI(role, email, password) {
   // hint 
   console.log("role: "+role);
   console.log("email: "+email);
   console.log("password: "+password);
-  if (role==="patient" && email==="patient1@gmail.com") {
-    return (
-      {loginStatus: true, userInfo: {name: "patient 1", email: "patient1@gmail.com", gender: "female"}}
-    )
+
+  if (role == "patient"){
+    response = await axios.post(
+      'https://0455gwuqd1.execute-api.us-east-1.amazonaws.com/test/userFunctionality',
+      {
+        "action": "login",
+        "userType": "Patient",
+        "email": email,
+        "password": password
+      }
+    );
+
+    return {loginStatus: response[0], userInfo : response[1]}
   }
-  else if (role==="doctor" && email==="doctor1@gmail.com") {
-    return (
-      {loginStatus: true, userInfo: {name: "doctor 1", email: "doctor1@gmail.com", gender: "female"}}
-    )
+
+  if (role == 'doctor'){
+    response = await axios.post(
+      'https://0455gwuqd1.execute-api.us-east-1.amazonaws.com/test/userFunctionality',
+      {
+        "action": "login",
+        "userType": "Doctor",
+        "email": email,
+        "password": password
+      }
+    );
+
+    return {loginStatus: response[0], userInfo : response[1]}
   }
-  else {
-    return ({loginStatus: false, userInfo: null})
-  }
-}
 
 export default LoginAPI
