@@ -6,6 +6,7 @@ import Conversation from './Conversation';
 import Message from './Message';
 
 import GetConversationsAPI from '../../api/chat/GetConversationsAPI';
+import SetConversationAPI from '../../api/chat/SetConversationAPI';
 import GetMessagesAPI from '../../api/chat/GetMessagesAPI';
 import AddMessageAPI from '../../api/chat/AddMessageAPI';
 import GetContactorInfoAPI from '../../api/chat/GetContactorInfoAPI';
@@ -48,14 +49,18 @@ function Messenger() {
 
     useEffect(()=>{
         const getConversations = async ()=>{
+            // console.log("conversations before update");
+            // console.log(conversations);
             const getConversationsAPIResponse = await GetConversationsAPI(userInfo["email"]);
             setConversations(getConversationsAPIResponse);
             setFilteredConversations(getConversationsAPIResponse);
+            // console.log("get conversations from API");
+            // console.log(conversations);
         };
         
         const intervalId = setInterval(() => {
             getConversations();
-        }, 60000);
+        }, 10000);
         return () => {
             clearInterval(intervalId);
         };
@@ -114,7 +119,12 @@ function Messenger() {
         setMessages([...historyMessages,tempMessage]);
         setNewMessage("");
         const addMessageAPIResponse = await AddMessageAPI(message, receiverEmail);
+        const index = currentChat.members.indexOf(userInfo.email);
+        var updatedConversation = {...currentChat, "updatedAt":new Date().toISOString()};
+        updatedConversation["lastReadAt"][index] = new Date().toISOString();
+        const setConversationAPIResponse = await SetConversationAPI(currentChat.conversationId, updatedConversation, "updatedAt")
         setMessages([...historyMessages,...addMessageAPIResponse.data]);
+        setConversations(setConversationAPIResponse);
     };
 
     return (
@@ -131,8 +141,30 @@ function Messenger() {
                             />
                         </div>
                         {filteredConversations.map((c) => (
-                            <div onClick={()=>setCurrentChat(c)}>
-                                <Conversation conversation={c} currentUser={userInfo} currentRole={userRole} receiverEmail={receiverEmail}/>
+                            <div onClick={()=>{
+                                    const setPreviousConversation = async ()=> {
+                                        const index = currentChat.members.indexOf(userInfo.email);
+                                        var updatedConversation = conversations.filter((c)=>c.conversationId==currentChat.conversationId)[0];
+                                        updatedConversation["lastReadAt"][index] = new Date().toISOString();
+                                        // const setConversationAPIResponse = await SetConversationAPI(currentChat.conversationId, {...conversations.filter((c)=>c.conversationId==currentChat.conversationId)[0], "lastReadAt":new Date().toISOString()}, "lastReadAt");
+                                        const setConversationAPIResponse = await SetConversationAPI(currentChat.conversationId, updatedConversation, "lastReadAt");
+                                        setConversations(setConversationAPIResponse);
+                                    }
+                                    if (currentChat !== null && currentChat.conversationId !== c.conversationId) {
+                                        // console.log("set last read");
+                                        setPreviousConversation();
+                                    }
+                                    // console.log("current chat is");
+                                    // console.log(c);
+                                    setCurrentChat(c);
+                                }}>
+                                <Conversation 
+                                    conversation={c} 
+                                    currentUser={userInfo} 
+                                    currentRole={userRole} 
+                                    // receiverEmail={receiverEmail} 
+                                    unreadStatus={currentChat!==null && currentChat.conversationId===c.conversationId?false:c.lastReadAt[c.members.indexOf(userInfo.email)]<c.updatedAt}
+                                />
                             </div>
                         ))}
                     </div>

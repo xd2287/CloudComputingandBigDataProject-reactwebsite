@@ -9,8 +9,8 @@ function getInitials(name) {
 }
 
 function Message({message, own, senderName}) {
-    console.log("**");
-    console.log(message);
+    // console.log("**");
+    // console.log(message);
     return (
         <>
             <div className= {own ? 'message own': 'message'}>
