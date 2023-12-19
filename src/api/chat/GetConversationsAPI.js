@@ -9,7 +9,7 @@ function GetConversationsAPI(senderEmail) {
             data: { senderEmail: senderEmail },
         }),
     };
-  
+    console.log("email for GetConversationsAPI",senderEmail);
     // Return a new Promise
     return new Promise((resolve, reject) => {
       axios

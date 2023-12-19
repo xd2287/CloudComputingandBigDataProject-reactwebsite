@@ -3,7 +3,6 @@ import getApi from "../getApi";
 import axios from 'axios';
 
 function GetMessagesAPI(conversationId) {
-    // const api = 'https://o46dbledt2.execute-api.us-east-1.amazonaws.com/dev/lfchat';
     const requestData = {
         body: JSON.stringify({
             action: 'GetMessages',

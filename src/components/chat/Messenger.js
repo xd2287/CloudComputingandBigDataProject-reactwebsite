@@ -92,7 +92,7 @@ function Messenger() {
                 // Handle errors here
                 console.error('Error:', error);
             });
-        }, 10000);
+        }, 600000);
         return () => {
             clearInterval(intervalId);
         };

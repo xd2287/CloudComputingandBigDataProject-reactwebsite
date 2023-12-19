@@ -1,15 +1,20 @@
 
+
 // import React, { Component } from 'react';
 // import axios from 'axios';
 
 // class App extends Component {
 //   componentDidMount() {
-//     const api = 'https://o46dbledt2.execute-api.us-east-1.amazonaws.com/dev/lfchat';
+//     const api = 'https://0455gwuqd1.execute-api.us-east-1.amazonaws.com/test/userFunctionality';
 //     const data = {
-//       body: JSON.stringify({
-//         action: 'GetConversations',
-//         data: { senderEmail: 'patient1@gmail.com' },
-//       }),
+//       "action": "signUp",
+//       "userType": "Doctor",
+//       "userName": "testP",
+//       "email": "testP@gmail.com",
+//       "password": "123",
+//       "phone": "123",
+//       "address": "1",
+//       "company": "company"
 //     };
 
 //     axios

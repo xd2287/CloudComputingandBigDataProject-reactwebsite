@@ -79,28 +79,40 @@ const LoginSignupForm = ({name}) => {
             alert("Please fill in all fields.");
         }
         else {
-            const loginReturn = LoginAPI(selectedRole, inputEmailValue, inputPasswordValue);
-            const successLogin = loginReturn["loginStatus"];
-            const loggedInUserInfo = loginReturn["userInfo"];
-            if (successLogin) {
-                alert("Successfully Login");
-                // appendItemToLocalStorageList("loggedInUsers", inputEmailValue);
-                localStorage.setItem("loggedInUserRole", selectedRole);
-                localStorage.setItem("loggedInUserInfo",JSON.stringify(loggedInUserInfo));
-                console.log(selectedRole);
-                console.log(selectedRole === "doctor");
-                if (selectedRole === "patient") {
-                    console.log("navigate to patient home");
-                    navigate('/patient-home', { replace: true });
+            const login = async ()=> {
+                const loginReturn = await LoginAPI(selectedRole, inputEmailValue, inputPasswordValue);
+                // setMessages(getMessagesAPIResponse);
+                console.log("loginReturn is");
+                console.log(loginReturn);
+                if (!loginReturn) {
+                    alert("Fail to login")
                 }
-                else if (selectedRole === "doctor") {
-                    console.log("navigate to doctor home");
-                    navigate('/doctor-home', { replace: true });
+                else {
+                    const successLogin = loginReturn["loginStatus"];
+                    const loggedInUserInfo = loginReturn["userInfo"];
+                    if (successLogin) {
+                        alert("Successfully Login");
+                        // appendItemToLocalStorageList("loggedInUsers", inputEmailValue);
+                        localStorage.setItem("loggedInUserRole", selectedRole);
+                        localStorage.setItem("loggedInUserInfo",JSON.stringify(loggedInUserInfo));
+                        console.log(selectedRole);
+                        console.log(selectedRole === "doctor");
+                        if (selectedRole === "patient") {
+                            console.log("navigate to patient home");
+                            navigate('/patient-home', { replace: true });
+                        }
+                        else if (selectedRole === "doctor") {
+                            console.log("navigate to doctor home");
+                            navigate('/doctor-home', { replace: true });
+                        }
+                    }
+                    else {
+                        alert("Invalid email address or incorrect password.");
+                    }
                 }
             }
-            else {
-                alert("Invalid email address or incorrect password.");
-            }
+            login();
+            // const loginReturn = LoginAPI(selectedRole, inputEmailValue, inputPasswordValue);
         }
     }
 
