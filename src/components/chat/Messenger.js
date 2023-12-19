@@ -92,7 +92,7 @@ function Messenger() {
                 // Handle errors here
                 console.error('Error:', error);
             });
-        }, 600000);
+        }, 10000);
         return () => {
             clearInterval(intervalId);
         };
@@ -116,6 +116,8 @@ function Messenger() {
     },[currentChat,conversations]);
 
     useEffect(()=>{
+        console.log("%%%%%%%%%%%%%");
+        console.log(receiverEmail);
         setReceiverInfo(JSON.parse(localStorage.getItem(receiverEmail)));
     },[receiverEmail]);
 

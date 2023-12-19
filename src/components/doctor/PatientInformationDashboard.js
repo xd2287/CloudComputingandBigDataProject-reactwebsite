@@ -114,7 +114,7 @@ function PatientInformationDashboard() {
                 initalCurrentPatient.treatmentPlan.filter((t)=>t.TreatmentId===currTreatmentId)[0], 
                 currentPatient.treatmentPlan.filter((t)=>t.TreatmentId===currTreatmentId)[0],
             )){
-                SetTreatmentPlanAPI(userInfo.email, currentPatient.email, currTreatmentId, currentPatient.treatmentPlan);
+                SetTreatmentPlanAPI(userInfo.email, currentPatient.email, currTreatmentId, initalCurrentPatient.treatmentPlan, currentPatient.treatmentPlan);
                 setInitialCurrentPatient(currentPatient);
                 alert("Successfully updated the treatment plan with Id "+currTreatmentId);
         }
@@ -224,7 +224,7 @@ function PatientInformationDashboard() {
         }
         else {
             const addPatient = async ()=>{
-                const addPatientAPIResponse = await AddPatientAPI(userInfo.name, newPatientEmail);
+                const addPatientAPIResponse = await AddPatientAPI(userInfo.email, newPatientEmail);
                 if (addPatientAPIResponse) {
                     alert("Successfully add a new patient");
                     setDisplayStatus("display&edit");
