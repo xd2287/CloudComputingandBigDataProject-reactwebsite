@@ -21,23 +21,41 @@ const LoginSignupForm = ({name}) => {
     const [inputNameValue, setinputNameValue] = useState("");
     const [inputEmailValue, setinputEmailValue] = useState("");
     const [inputPasswordValue, setinputPasswordValue] = useState("");
+    const [inputAddressValue, setinputAddressValue] = useState("");
+    const [inputInsuranceCompanyValue, setinputInsuranceCompanyValue] = useState("");
+    const [inputInsuranceNumberValue, setinputInsuranceNumberValue] = useState("");
+    const [inputCompanyValue, setinputCompanyValue] = useState("");
 
     const handleRoleChange = (event) => { setSelectedRole(event.target.value); };
     const handleInputNameChange = (event) => { setinputNameValue(event.target.value); };
     const handleInputEmailChange = (event) => { setinputEmailValue(event.target.value); };
     const handleInputPasswordChange = (event) => { setinputPasswordValue(event.target.value); };
+    const handleInputAddressChange = (event) => { setinputAddressValue(event.target.value); };
+    const handleInputInsuranceCompanyChange = (event) => { setinputInsuranceCompanyValue(event.target.value); };
+    const handleInputInsuranceNumberChange = (event) => { setinputInsuranceNumberValue(event.target.value); };
+    const handleInputCompanyChange = (event) => { setinputCompanyValue(event.target.value); };
+    
 
     const handleSubmitSignUp = () => {
         if (
             selectedRole === "" ||
             inputNameValue === "" ||
             inputEmailValue === "" ||
-            inputPasswordValue === ""
+            inputPasswordValue === "" || (
+                selectedRole === "patient" &&
+                (
+                    inputAddressValue === "" ||
+                    inputInsuranceCompanyValue === "" ||
+                    inputInsuranceNumberValue === ""
+                )
+            ) || (
+                selectedRole === "doctor" && inputCompanyValue === ""
+            )
         ) {
             alert("Please fill in all fields.");
         }
         else {
-            const successSignUp = SignUpAPI(selectedRole, inputNameValue, inputEmailValue, inputPasswordValue);
+            const successSignUp = SignUpAPI(selectedRole, inputNameValue, inputEmailValue, inputPasswordValue, inputAddressValue, inputInsuranceCompanyValue, inputInsuranceNumberValue, inputCompanyValue);
             if (successSignUp) {
                 alert("Successfully sign up");
                 console.log("navigate to patient home")
@@ -123,14 +141,45 @@ const LoginSignupForm = ({name}) => {
                 <img src={password_icon} alt="" />
                 <input type="password" placeholder='Password' value={inputPasswordValue} onChange={handleInputPasswordChange} />
             </div>
+            {action==="SignUp"
+                ? <>
+                    {selectedRole==="patient"
+                        ?<> 
+                            <div className='input'>
+                                <img src={user_icon} alt="" />
+                                <input type="text" placeholder='Address' value={inputAddressValue} onChange={handleInputAddressChange} />
+                            </div>
+                            <div className='input'>
+                                <img src={user_icon} alt="" />
+                                <input type="text" placeholder='InsuranceCompany' value={inputInsuranceCompanyValue} onChange={handleInputInsuranceCompanyChange} />
+                            </div>
+                            <div className='input'>
+                                <img src={user_icon} alt="" />
+                                <input type="text" placeholder='InsuranceNumber' value={inputInsuranceNumberValue} onChange={handleInputInsuranceNumberChange} />
+                            </div>
+                        </>
+                        :
+                        <>
+                        {selectedRole==="doctor"
+                            ? <div className='input'>
+                                <img src={user_icon} alt="" />
+                                <input type="text" placeholder='Company' value={inputCompanyValue} onChange={handleInputCompanyChange} />
+                            </div>
+                            : null
+                        }
+                        </>
+                    }
+                </>
+                : null
+            }
         </div>
-        {action==="Login"
+        {/* {action==="Login"
             ? <div className='forgot-password'>
                 Lost Password?
                 <span> Click Here!</span>
             </div>
             : null
-        }      
+        }       */}
         <div className='submit-container'>
             <Button
             className='btns'

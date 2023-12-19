@@ -8,6 +8,8 @@ import disabled_alarm from '../../assets/disabled_alarm.png'
 import '../../css/App.css';
 import '../../css/components/patient/CheckTreatmentPlan.css';
 
+import GetContactorInfoAPI from '../../api/chat/GetContactorInfoAPI'
+
 
 function CheckTreatmentPlan() {
     const userInfo = JSON.parse(localStorage.getItem("loggedInUserInfo"));
@@ -30,6 +32,8 @@ function CheckTreatmentPlan() {
                 {treatmentPlans.map(plan => (
                     <div key={plan.TreatmentId} className="TreatmentPlan-Container">
                         <h3>Treatment Plan Id: {plan.TreatmentId}</h3>
+                        <p>Created By: {plan.doctorCreatedBy}</p>
+                        <p>Date Modifed: {plan.dateModifed}</p>
                         <div className="Medicines-Container">
                             <div className="Medicines">
                                 <ol>

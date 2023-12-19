@@ -11,7 +11,7 @@ function Conversation({conversation, currentUser, currentRole, unreadStatus}) {
         return (
             <>
                 <div className='conversation'>
-                    <span className="conversationName">{contactor.name}</span>
+                    <span className="conversationName">{contactor.name} ({contactor.email})</span>
                     {unreadStatus?<span className="unreadReminder"></span>:null}
                 </div>
             </>

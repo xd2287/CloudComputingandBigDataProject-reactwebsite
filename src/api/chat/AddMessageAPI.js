@@ -1,7 +1,8 @@
-function AddMessageAPI(message, receiverEmail) {
+function AddMessageAPI(message, receiverEmail, senderRole) {
     // API return: {status: whetherAddSuccess}
     // Return: if message.senderRole is patient, return {"status": true, "data": [newMessage, responsedMessage from receiver]}; 
     //         if message.senderRole is doctor, return {}
+    // message should be formatted in a json
     const conversation = JSON.parse(localStorage.getItem(message.conversationId));
     const mockChatbotResponseMessage = {
         "sender": receiverEmail,

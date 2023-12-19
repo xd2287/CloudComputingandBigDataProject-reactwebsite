@@ -8,6 +8,7 @@
     background: rgb(201, 226, 170);
     padding-bottom: 30px;
     height: 82vh;
+    justify-content: space-between;
 }
 
 .header{
@@ -33,10 +34,11 @@
 }
 
 .inputs{
-    margin-top: 30px;
+    margin-top: 15px;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 15px;
+    height: 400px;
 }
 
 .input{
@@ -44,7 +46,7 @@
     align-items: center;
     margin: auto;
     width: 480px;
-    height: 60px;
+    height: 50px;
     background:rgb(161, 199, 115);
     border-radius: 6px;
 }
@@ -54,7 +56,7 @@
 }
 
 .input input, select{
-    height: 50px;
+    height: 30px;
     width: 400px;
     background: transparent;
     border: none;

@@ -118,11 +118,14 @@ function Messenger() {
         const historyMessages = messages;
         setMessages([...historyMessages,tempMessage]);
         setNewMessage("");
-        const addMessageAPIResponse = await AddMessageAPI(message, receiverEmail);
+        const addMessageAPIResponse = await AddMessageAPI(message, receiverEmail, userRole);
         const index = currentChat.members.indexOf(userInfo.email);
-        var updatedConversation = {...currentChat, "updatedAt":new Date().toISOString()};
-        updatedConversation["lastReadAt"][index] = new Date().toISOString();
-        const setConversationAPIResponse = await SetConversationAPI(currentChat.conversationId, updatedConversation, "updatedAt")
+        const updatedConversation = {...currentChat, "updatedAt":new Date().toISOString()};
+        // updatedConversation["lastReadAt"][index] = new Date().toISOString();
+        const newUpdatedAt = new Date().toISOString();
+        var newLastReadAt = updatedConversation["lastReadAt"];
+        newLastReadAt[index] = new Date().toISOString();
+        const setConversationAPIResponse = await SetConversationAPI(currentChat.conversationId, newUpdatedAt, newLastReadAt, userInfo.email);
         setMessages([...historyMessages,...addMessageAPIResponse.data]);
         setConversations(setConversationAPIResponse);
     };
@@ -144,10 +147,16 @@ function Messenger() {
                             <div onClick={()=>{
                                     const setPreviousConversation = async ()=> {
                                         const index = currentChat.members.indexOf(userInfo.email);
-                                        var updatedConversation = conversations.filter((c)=>c.conversationId==currentChat.conversationId)[0];
-                                        updatedConversation["lastReadAt"][index] = new Date().toISOString();
+                                        const updatedConversation = conversations.filter((c)=>c.conversationId==currentChat.conversationId)[0];
+                                        var newLastReadAt = updatedConversation["lastReadAt"]
+                                        newLastReadAt[index] = new Date().toISOString();
+                                        // updatedConversation["lastReadAt"][index] = new Date().toISOString();
                                         // const setConversationAPIResponse = await SetConversationAPI(currentChat.conversationId, {...conversations.filter((c)=>c.conversationId==currentChat.conversationId)[0], "lastReadAt":new Date().toISOString()}, "lastReadAt");
-                                        const setConversationAPIResponse = await SetConversationAPI(currentChat.conversationId, updatedConversation, "lastReadAt");
+                                        // const setConversationAPIResponse = await SetConversationAPI(currentChat.conversationId, updatedConversation, "lastReadAt");
+
+                                        // const newLastReadAt = new Date().toISOString();
+                                        const setConversationAPIResponse = await SetConversationAPI(currentChat.conversationId, null, newLastReadAt, userInfo.email);
+
                                         setConversations(setConversationAPIResponse);
                                     }
                                     if (currentChat !== null && currentChat.conversationId !== c.conversationId) {
