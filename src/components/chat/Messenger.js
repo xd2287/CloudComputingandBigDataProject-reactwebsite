@@ -28,9 +28,32 @@ function Messenger() {
 
     // console.log("userInfo.email",userInfo.email);
     useEffect(()=>{
+        // GetConversationsAPI(userInfo["email"])
+        //     .then((getConversationsAPIResponse) => {
+        //         console.log('Received returnData:', getConversationsAPIResponse);
+        //         for (const conversationResponse of getConversationsAPIResponse) {
+        //             const receiverEmail = conversationResponse.members[0] === userInfo.email ? 
+        //                                     conversationResponse.members[1] :
+        //                                     conversationResponse.members[0]
+        //             if (localStorage.getItem(receiverEmail) === null) {
+        //                 const currReceiverInfo = GetContactorInfoAPI(userRole, receiverEmail);
+        //                 localStorage.setItem(receiverEmail,JSON.stringify(currReceiverInfo));
+        //             }
+        //         }
+    
+        //         setConversations(getConversationsAPIResponse);
+        //         setFilteredConversations(getConversationsAPIResponse);
+        //     })
+        //     .catch((error) => {
+        //         // Handle errors here
+        //         console.error('Error:', error);
+        //     });
         const getConversations = async ()=>{
             const getConversationsAPIResponse = await GetConversationsAPI(userInfo["email"]);
             
+            // console.log("***************");
+            // console.log(getConversationsAPIResponse);
+
             for (const conversationResponse of getConversationsAPIResponse) {
                 const receiverEmail = conversationResponse.members[0] === userInfo.email ? 
                                         conversationResponse.members[1] :
@@ -48,18 +71,27 @@ function Messenger() {
     }, [userInfo.email]);
 
     useEffect(()=>{
-        const getConversations = async ()=>{
-            // console.log("conversations before update");
-            // console.log(conversations);
-            const getConversationsAPIResponse = await GetConversationsAPI(userInfo["email"]);
-            setConversations(getConversationsAPIResponse);
-            setFilteredConversations(getConversationsAPIResponse);
-            // console.log("get conversations from API");
-            // console.log(conversations);
-        };
+        // const getConversations = async ()=>{
+        //     // console.log("conversations before update");
+        //     // console.log(conversations);
+        //     const getConversationsAPIResponse = await GetConversationsAPI(userInfo["email"]);
+        //     setConversations(getConversationsAPIResponse);
+        //     setFilteredConversations(getConversationsAPIResponse);
+        //     // console.log("get conversations from API");
+        //     // console.log(conversations);
+        // };
         
         const intervalId = setInterval(() => {
-            getConversations();
+            GetConversationsAPI(userInfo["email"])
+            .then((getConversationsAPIResponse) => {
+                console.log('Received returnData:', getConversationsAPIResponse);
+                setConversations(getConversationsAPIResponse);
+                setFilteredConversations(getConversationsAPIResponse);
+            })
+            .catch((error) => {
+                // Handle errors here
+                console.error('Error:', error);
+            });
         }, 10000);
         return () => {
             clearInterval(intervalId);
@@ -68,6 +100,7 @@ function Messenger() {
     }, []);
 
     useEffect(()=>{
+        console.log(conversations);
         const getMessages = async ()=> {
             const getMessagesAPIResponse = await GetMessagesAPI(currentChat.conversationId);
             setMessages(getMessagesAPIResponse);
@@ -80,7 +113,7 @@ function Messenger() {
             getMessages();
             getReceiverEmail();
         }
-    },[currentChat]);
+    },[currentChat,conversations]);
 
     useEffect(()=>{
         setReceiverInfo(JSON.parse(localStorage.getItem(receiverEmail)));
@@ -119,6 +152,8 @@ function Messenger() {
         setMessages([...historyMessages,tempMessage]);
         setNewMessage("");
         const addMessageAPIResponse = await AddMessageAPI(message, receiverEmail, userRole);
+        console.log("addMessageAPIResponse is ")
+        console.log(addMessageAPIResponse)
         const index = currentChat.members.indexOf(userInfo.email);
         const updatedConversation = {...currentChat, "updatedAt":new Date().toISOString()};
         // updatedConversation["lastReadAt"][index] = new Date().toISOString();
@@ -126,7 +161,8 @@ function Messenger() {
         var newLastReadAt = updatedConversation["lastReadAt"];
         newLastReadAt[index] = new Date().toISOString();
         const setConversationAPIResponse = await SetConversationAPI(currentChat.conversationId, newUpdatedAt, newLastReadAt, userInfo.email);
-        setMessages([...historyMessages,...addMessageAPIResponse.data]);
+        // setMessages([...historyMessages,...addMessageAPIResponse.data]);
+        setMessages(addMessageAPIResponse.data)
         setConversations(setConversationAPIResponse);
     };
 
@@ -173,6 +209,7 @@ function Messenger() {
                                     currentRole={userRole} 
                                     // receiverEmail={receiverEmail} 
                                     unreadStatus={currentChat!==null && currentChat.conversationId===c.conversationId?false:c.lastReadAt[c.members.indexOf(userInfo.email)]<c.updatedAt}
+                                    // unreadStatus={currentChat!==null && currentChat.conversationId===c.conversationId?false:c.lastReadAt[c.members.indexOf(userInfo.email)]<c.updatedAt}
                                 />
                             </div>
                         ))}

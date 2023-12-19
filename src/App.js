@@ -1,3 +1,42 @@
+
+// import React, { Component } from 'react';
+// import axios from 'axios';
+
+// class App extends Component {
+//   componentDidMount() {
+//     const api = 'https://o46dbledt2.execute-api.us-east-1.amazonaws.com/dev/lfchat';
+//     const data = {
+//       body: JSON.stringify({
+//         action: 'GetConversations',
+//         data: { senderEmail: 'patient1@gmail.com' },
+//       }),
+//     };
+
+//     axios
+//       .post(api, data)
+//       .then((response) => {
+//         console.log(response);
+//       })
+//       .catch((error) => {
+//         console.log(error);
+//       });
+//   }
+
+//   render() {
+//     return <div>Medium Tutorial</div>;
+//   }
+// }
+
+// export default App;
+
+
+
+
+
+
+
+
+
 // import logo from './logo.svg';
 import './css/App.css';
 import React from "react";
