@@ -193,6 +193,21 @@
     height: 100%;
 }
 
+.infoMenuInputContainer{
+  display: flex;
+  justify-content: space-between;
+}
+
+.infoMenuInputContainer button{
+  height: 20px;
+  width: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  background-color: rgb(45, 82, 0);
+  color: white;
+  border-radius: 5px;
+}
+
 .noPatientText {
     position: absolute;
     top: 10%;
@@ -267,3 +282,23 @@
   /* .createNewTPBottom button{
     width: 150px;
   } */
+
+  .createPatientContent{
+    height: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .createPatientContent-inputbox{
+    height: 50px;
+    width: 500px;
+  }
+
+  .newPatientEmail{
+    margin-left: 20px;
+    width: 300px;
+    height: 50px;
+  }
